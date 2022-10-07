@@ -1,5 +1,7 @@
 {
   "extends": "@meb/tsconfig/vite.json",
   "include": ["src"],
+  "compilerOptions": {
+  },
   "references": [{ "path": "./tsconfig.node.json" }]
 }
