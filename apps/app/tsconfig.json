@@ -1,7 +1,10 @@
 {
   "extends": "@meb/tsconfig/vite.json",
-  "include": ["src"],
+  "include": ["src", "vite.config.ts"],
   "compilerOptions": {
-  },
-  "references": [{ "path": "./tsconfig.node.json" }]
+    "composite": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true,
+  }
 }

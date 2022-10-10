@@ -1,17 +1,12 @@
-import { AppFooter, AppHeader, BrandingProvider } from '@meb/components';
 import CssBaseline from '@mui/material/CssBaseline';
-import { Box } from '@mui/material';
+import { BrandingProvider } from './components';
+import HomeLayout from './views/HomeLayout';
 
 function App() {
   return (
     <BrandingProvider mode="light">
       <CssBaseline />
-      <AppHeader />
-      <Box>
-        
-
-      </Box>
-      <AppFooter />
+      <HomeLayout />
     </BrandingProvider>
   );
 }

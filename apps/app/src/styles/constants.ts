@@ -1,5 +1,5 @@
 import { cyan, purple } from '@mui/material/colors';
-import { alpha } from '@mui/material/styles';
+import { alpha, keyframes } from '@mui/material/styles';
 import { Colors, Shadow, Size } from '../types';
 import { boxColorShadow, boxShadow, linearGradient, pxToRem } from './utils';
 
@@ -139,7 +139,6 @@ export const borders = {
     4: pxToRem(4),
     5: pxToRem(5),
   },
-
   borderRadius: {
     xs: pxToRem(1.6),
     sm: pxToRem(2),
@@ -181,3 +180,4 @@ export const gradients: Record<Colors, any> = {
   warning: linearGradient(warning[700], warning[100]),
   error: linearGradient(error[700], error[100]),
 };
+
