@@ -1,13 +1,13 @@
-import CssBaseline from '@mui/material/CssBaseline';
-import { BrandingProvider } from './components';
-import HomeLayout from './views/HomeLayout';
+import { CssBaseline } from '@mui/material';
+import { BrandProvider } from './components';
+import Example2 from './views/Example2';
 
 function App() {
   return (
-    <BrandingProvider mode="light">
+    <BrandProvider>
       <CssBaseline />
-      <HomeLayout />
-    </BrandingProvider>
+      <Example2 />
+    </BrandProvider>
   );
 }
 
