@@ -11,7 +11,6 @@ function BrandProvider({ children }: ReactParent) {
     const designTokens = getDesignTokens(state.theme);
     let newTheme = createTheme(designTokens);
     newTheme = deepmerge(newTheme, { components: getThemedComponents(newTheme) });
-    console.log(newTheme);
     return newTheme;
   }, [state.theme]);
 

@@ -24,8 +24,8 @@ export function boxColorShadow(main: string, state: string) {
   return `${boxShadow([0, 4], [20, 0], main, 0.14)}, ${boxShadow([0, 7], [10, -5], state, 0.4)}`;
 }
 
-export function linearGradient(color: string, colorState: string, angle = 195) {
-  return `linear-gradient(${angle}deg, ${color}, ${colorState})`;
+export function linearGradient(color: { main: string; state: string }, angle = 195) {
+  return `linear-gradient(${angle}deg, ${color.main}, ${color.state})`;
 }
 
 export function iff(condition: boolean, truth: any, falsy: any) {

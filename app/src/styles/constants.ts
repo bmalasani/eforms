@@ -63,6 +63,16 @@ export const fontSizes: Record<Size | 'xxs' | '2xl' | '3xl', string> = {
 };
 
 //Borders
+export const borderRadiuses = {
+  xs: pxToRem(1.6),
+  sm: pxToRem(2),
+  md: pxToRem(6),
+  lg: pxToRem(8),
+  xl: pxToRem(12),
+  xxl: pxToRem(16),
+  section: pxToRem(160),
+};
+
 export const borders = {
   borderColor: alpha(white, 0.4),
   borderWidth: {
@@ -72,15 +82,6 @@ export const borders = {
     3: pxToRem(3),
     4: pxToRem(4),
     5: pxToRem(5),
-  },
-  borderRadius: {
-    xs: pxToRem(1.6),
-    sm: pxToRem(2),
-    md: pxToRem(6),
-    lg: pxToRem(8),
-    xl: pxToRem(12),
-    xxl: pxToRem(16),
-    section: pxToRem(160),
   },
 };
 
@@ -104,4 +105,59 @@ export const boxShadows: Record<Shadow | Colors, any> = {
   success: boxColorShadow(black, colors.success.main),
   warning: boxColorShadow(black, colors.warning.main),
   error: boxColorShadow(black, colors.error.main),
+};
+
+//Gradiants
+
+const gradientColors = {
+  primary: {
+    main: '#EC407A',
+    state: '#D81B60',
+  },
+
+  secondary: {
+    main: '#747b8a',
+    state: '#495361',
+  },
+
+  info: {
+    main: '#49a3f1',
+    state: '#1A73E8',
+  },
+
+  success: {
+    main: '#66BB6A',
+    state: '#43A047',
+  },
+
+  warning: {
+    main: '#FFA726',
+    state: '#FB8C00',
+  },
+
+  error: {
+    main: '#EF5350',
+    state: '#E53935',
+  },
+
+  light: {
+    main: '#EBEFF4',
+    state: '#CED4DA',
+  },
+
+  dark: {
+    main: '#42424a',
+    state: '#191919',
+  },
+};
+
+export const gradiants: Record<Colors | 'light' | 'dark', string> = {
+  primary: linearGradient(gradientColors.primary),
+  secondary: linearGradient(gradientColors.secondary),
+  error: linearGradient(gradientColors.error),
+  info: linearGradient(gradientColors.info),
+  success: linearGradient(gradientColors.success),
+  warning: linearGradient(gradientColors.warning),
+  light: linearGradient(gradientColors.light),
+  dark: linearGradient(gradientColors.dark),
 };
