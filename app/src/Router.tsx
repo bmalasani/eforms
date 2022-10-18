@@ -1,29 +1,23 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from './App';
-import Example from './views/Example';
+import { appLoader, homeLoader } from './utils/loaders';
+import FormBuilder from './views/FormBuilder';
 import Home from './views/Home';
 
-export const router = createBrowserRouter([
+export const Router = createBrowserRouter([
   {
     path: '/',
-    loader:undefined,
+    loader: appLoader,
     element: <App />,
     children: [
       {
         path: '/',
+        loader: homeLoader,
         element: <Home />,
       },
       {
-        path: 'contact',
-        element: <Example />,
-      },
-      {
-        path: 'dashboard',
-        element: <Example />,
-        loader: ({ request }) =>
-          fetch('/api/dashboard.json', {
-            signal: request.signal,
-          }),
+        path: 'form',
+        element: <FormBuilder />,
       },
     ],
   },

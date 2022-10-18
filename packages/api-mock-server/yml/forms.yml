@@ -1,0 +1,620 @@
+openapi: 3.0.2
+info:
+  version: '1.0.0'
+  title: 'eForms API'
+  contact:
+    email: nani.malasani@gmail.com
+  description: |
+    EForms API
+
+servers:
+  - url: 'http://example.com/api/v1'
+
+paths:
+  /forms/{formId}:
+    get:
+      description: Get form by form Id
+      operationId: getFormByFormId
+      parameters:
+        - name: formId
+          in: path
+          description: form that needs to be fetched
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: form returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormDetail'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      description: Updated Form
+      operationId: updateForm
+      parameters:
+        - name: formId
+          in: path
+          required: true
+          schema:
+            type: string
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormDetail'
+        required: true
+
+      responses:
+        '200':
+          description: form returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormDetail'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /forms:
+    get:
+      description: List form
+      operationId: listForms
+
+      parameters:
+        - name: 'order_by'
+          in: query
+          description: Order by
+          required: false
+          schema:
+            type: string
+        - name: 'page_token'
+          in: query
+          description: page size
+          required: false
+          schema:
+            type: string
+        - name: 'q'
+          in: query
+          description: search
+          required: false
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  next_page:
+                    type: string
+                  forms:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Form'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      description: create new form
+      operationId: newForm
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormDetail'
+        required: true
+
+      responses:
+        '200':
+          description: form returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormDetail'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /requests/{requestId}:
+    get:
+      description: Get request
+      operationId: getRequestByRequrestId
+      parameters:
+        - name: requestId
+          in: path
+          description: form that needs to be fetched
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestDetail'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      description: Updated Request
+      operationId: newRequest
+      parameters:
+        - name: requestId
+          in: path
+          description: form that needs to be fetched
+          required: true
+          schema:
+            type: string
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestDetail'
+        required: true
+
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestDetail'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /requests/{requestId}/{action}:
+    post:
+      description: Updated Request
+      operationId: newRequest
+      parameters:
+        - name: requestId
+          in: path
+          description: form that needs to be fetched
+          required: true
+          schema:
+            type: string
+        - name: action
+          in: path
+          description: form that needs to be fetched
+          required: true
+          schema:
+            type: string
+            enum:
+              - approve
+              - review
+              - actioned
+              - withdraw
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comments:
+                  type: string
+
+        required: true
+
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestDetail'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /requests:
+    get:
+      description: List request
+      operationId: listRequests
+
+      parameters:
+        - name: 'order_by'
+          in: query
+          description: Order by
+          required: false
+          schema:
+            type: string
+        - name: 'page_token'
+          in: query
+          description: page size
+          required: false
+          schema:
+            type: string
+        - name: 'q'
+          in: query
+          description: search
+          required: false
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  next_page:
+                    type: string
+                  requests:
+                    type: array
+                    minItems: 10
+                    items:
+                      $ref: '#/components/schemas/RequestDetail'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      description: create new equest
+      operationId: newRequest
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestDetail'
+        required: true
+
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestDetail'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /user/{alias}:
+    get:
+      description: Get User
+      operationId: getUserByAlias
+      parameters:
+        - name: alias
+          in: path
+          description: alias that needs to be fetched
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /stats/{alias}:
+    get:
+      description: Get Stats by User alias
+      operationId: getStatsByAlias
+      parameters:
+        - name: alias
+          in: path
+          description: alias that needs to be fetched
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stats'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Form:
+      type: object
+      properties:
+        formId:
+          description: form id
+          type: string
+          minLength: 6
+        formName:
+          description: form name
+          type: string
+          minLength: 5
+        formGroup:
+          description: form group
+          type: string
+          minLength: 5
+        allowedDepartments:
+          description: groups which can access form
+          type: array
+          items:
+            type: string
+        isActive:
+          description: form active
+          type: boolean
+
+    WorkFlow:
+      type: object
+      properties:
+        approverLevel:
+          description: Approver Level
+          type: string
+          enum:
+            - Requestor
+            - Reviewer
+            - DepartmentApprover
+            - FunctionalApprover
+            - ActionTaker
+
+        approver:
+          description: approver email /alias
+          type: string
+          minLength: 1
+
+        approverDelegate:
+          description: User last name
+          type: array
+          items:
+            type: string
+
+        approverComments:
+          description: User last name
+          type: string
+
+        autoApproval:
+          description: auto approval
+          type: boolean
+
+        includeAttachments:
+          description: auto approval
+          type: boolean
+
+        disableNotification:
+          description: auto approval
+          type: boolean
+
+    FormNotification:
+      type: object
+      properties:
+        subject:
+          description: subject
+          type: string
+
+        additionalReceipients:
+          description: approver email /alias
+          type: string
+          minLength: 1
+
+    FeildStructure:
+      type: object
+      properties:
+        feildId:
+          description: subject
+          type: string
+
+        label:
+          description: subject
+          type: string
+
+        type:
+          description: subject
+          type: string
+          enum:
+            - text
+            - radio
+            - check
+
+        value:
+          description: approver email /alias
+          type: object
+
+        validations:
+          description: approver email /alias
+          type: array
+          items:
+            type: string
+
+        defaultValue:
+          description: approver email /alias
+          type: object
+
+        order:
+          description: approver email /alias
+          type: number
+
+        style:
+          description: approver email /alias
+          type: object
+
+    FormDetail:
+      type: object
+      properties:
+        core:
+          $ref: '#/components/schemas/Form'
+
+        formWorkFlow:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkFlow'
+
+        formWorkNotification:
+          $ref: '#/components/schemas/FormNotification'
+
+        formDetails:
+          description: User last name
+          type: array
+          items:
+            $ref: '#/components/schemas/FeildStructure'
+
+        activeTill:
+          description: User last name
+          type: string
+          minLength: 1
+          example: Smith
+
+        submitterMessage:
+          description: User last name
+          type: string
+          minLength: 1
+          example: Smith
+
+        approverMessage:
+          description: User last name
+          type: string
+          minLength: 1
+          example: Smith
+
+        compeletedMessage:
+          description: User last name
+          type: string
+          minLength: 1
+          example: Smith
+
+    RequestDetail:
+      type: object
+      properties:
+        requestId:
+          type: string
+        form:
+          $ref: '#/components/schemas/Form'
+
+        requestWorkFlow:
+          type: array
+          minItems: 4
+          items:
+            $ref: '#/components/schemas/WorkFlow'
+
+        requestDetails:
+          description: User last name
+          type: array
+          minItems: 10
+          items:
+            $ref: '#/components/schemas/FeildStructure'
+
+    User:
+      type: object
+      properties:
+        username:
+          description: User supplied username
+          type: string
+          minLength: 4
+          example: John78
+        firstName:
+          description: User first name
+          type: string
+          minLength: 1
+          example: John
+        lastName:
+          description: User last name
+          type: string
+          minLength: 1
+          example: Smith
+        managerName:
+          description: manager alias
+          type: string
+          minLength: 1
+          example: Smith
+        email:
+          description: user email
+          type: string
+          format: email
+        department:
+          description: user department
+          type: string
+        position:
+          description: user position
+          type: string
+        mobile:
+          description: user mobile
+          type: string
+
+    Stats:
+      type: object
+      properties:
+        requests:
+          description: user requests
+          type: number
+        approvals:
+          description: user approvals
+          type: number
+        actions:
+          description: user actions
+          type: number
+        drafts:
+          description: user drafts
+          type: number
+
+    Error:
+      type: object
+      properties:
+        errorId:
+          description: user requests
+          type: string
+        errorMessage:
+          description: user approvals
+          type: string
+        help:
+          description: user actions
+          type: string

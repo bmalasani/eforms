@@ -4,26 +4,18 @@ import { boxShadows, gradiants, borderRadiuses } from '../../styles/constants';
 import { BorderRadius, Colors, Shadow } from '../../types';
 
 export interface StyledAvatarProps extends AvatarProps {
-  gradient?: boolean;
-  bgColor?: Colors | 'light' | 'dark';
+  gradient?: Colors | 'light' | 'dark';
   radius?: BorderRadius;
   shadow?: Shadow | Colors;
 }
 
 const StyledAvatar = styled(Avatar, {
-  shouldForwardProp: (prop) =>
-    !['gradient', 'bgColor', 'radius', 'shadow'].includes(prop as string),
-})<StyledAvatarProps>(({ gradient, bgColor, radius, shadow, theme }) => ({
-  ...(bgColor &&
-    (gradient
-      ? {
-          background: gradiants[bgColor],
-          color: bgColor != 'light' ? theme.palette.common.white : theme.palette.common.black,
-        }
-      : {
-          color: bgColor != 'light' ? theme.palette.common.white : theme.palette.common.black,
-          background: bgColor in theme.palette ? (theme.palette as any)[bgColor]?.main : bgColor,
-        })),
+  shouldForwardProp: (prop) => !['gradient', 'radius', 'shadow'].includes(prop as string),
+})<StyledAvatarProps>(({ gradient, radius, shadow, theme }) => ({
+  ...(gradient && {
+    background: gradiants[gradient],
+    color: gradient != 'light' ? theme.palette.common.white : theme.palette.common.black,
+  }),
   ...(shadow && {
     boxShadow: boxShadows[shadow],
   }),

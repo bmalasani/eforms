@@ -25,76 +25,57 @@ export function getThemedComponents(theme: Theme): Theme['components'] {
         root: {
           display: 'flex',
           alignItems: 'center',
-          minHeight: '56px',
+          minHeight: '48px',
         },
       },
     },
-    // MuiTabs: {
-    //   styleOverrides: {
-    //     root: {
-    //       position: 'relative',
-    //       backgroundColor: theme.palette.grey[100],
-    //       borderRadius: theme.spacing(2),
-    //       minHeight: 'unset',
-    //       padding: theme.spacing(0.5),
-    //     },
-    //     flexContainer: {
-    //       height: '100%',
-    //       position: 'relative',
-    //       zIndex: 10,
-    //     },
-    //     vertical: {
-    //       '& .MuiTabs-indicator': {
-    //         width: '100%',
-    //       },
-    //     },
-    //     indicator: {
-    //       height: '100%',
-    //       borderRadius: theme.spacing(2),
-    //       backgroundColor: theme.palette.common.white,
-    //       boxShadow: boxShadows.inset,
-    //       transition: 'all 500ms ease',
-    //     },
-    //   },
-    // },
-    // MuiTab: {
-    //   styleOverrides: {
-    //     root: {
-    //       display: 'flex',
-    //       alignItems: 'center',
-    //       flexDirection: 'row',
-    //       flex: '1 1 auto',
-    //       textAlign: 'center',
-    //       maxWidth: 'unset !important',
-    //       minWidth: 'unset !important',
-    //       minHeight: 'unset !important',
-    //       fontSize: theme.typography.pxToRem(14),
-    //       fontWeight: theme.typography.fontWeightRegular,
-    //       textTransform: 'none',
-    //       lineHeight: 'inherit',
-    //       padding: theme.spacing(0.5),
-    //       borderRadius: theme.spacing(2),
-    //       opacity: '1 !important',
-
-    //       '& .material-icons, .material-icons-round': {
-    //         marginBottom: '0 !important',
-    //         marginRight: theme.spacing(0.3),
-    //       },
-
-    //       '& svg': {
-    //         marginBottom: '0 !important',
-    //         marginRight: theme.spacing(0.3),
-    //       },
-
-    //       '& i.MuiTab-iconWrapper': {
-    //         marginBottom: 0,
-    //       },
-    //     },
-    //     labelIcon: {
-    //       paddingTop: theme.spacing(0.5),
-    //     },
-    //   },
-    // },
+    MuiTabs: {
+      styleOverrides: {
+        root: {
+          position: 'relative',
+          borderRadius: theme.spacing(2),
+          minHeight: 'unset',
+          padding: theme.spacing(0.5),
+        },
+        indicator: {
+          backgroundColor: theme.palette.grey[400],
+          transition: 'all 500ms ease',
+          height: '100%',
+          borderRadius: theme.spacing(2),
+        },
+        flexContainer: {
+          height: '100%',
+          position: 'relative',
+          zIndex: 10,
+        },
+        vertical: {
+          '& .MuiTabs-indicator': {
+            width: '100%',
+          },
+        },
+      },
+    },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: 'row',
+          flex: '1 1 auto',
+          textAlign: 'center',
+          maxWidth: 'unset !important',
+          minWidth: 'unset !important',
+          minHeight: 'unset !important',
+          fontSize: theme.typography.pxToRem(14),
+          fontWeight: theme.typography.fontWeightMedium,
+          textTransform: 'none',
+          lineHeight: 'inherit',
+          padding: theme.spacing(1),
+          borderRadius: theme.spacing(2),
+          opacity: '1 !important',
+        },
+      },
+    },
     MuiCard: {
       styleOverrides: {
         root: {
@@ -102,22 +83,35 @@ export function getThemedComponents(theme: Theme): Theme['components'] {
           flexDirection: 'column',
           position: 'relative',
           wordWrap: 'break-word',
-          backgroundColor:
-            theme.palette.mode === 'light' ? theme.palette.common.white : theme.palette.grey[800],
-          backgroundClip: 'border-box',
-          borderRadius: theme.typography.pxToRem(12),
-          boxShadow: boxShadows.md,
           overflow: 'visible',
         },
       },
     },
-    MuiTableContainer:{
-      styleOverrides:{
-        root:{
+    MuiDivider: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'transparent',
+          backgroundImage: `linear-gradient(to right, ${alpha(theme.palette.grey[900], 0)}, ${
+            theme.palette.grey[900]
+          }, ${alpha(theme.palette.grey[900], 0)}) !important`,
+          height: pxToRem(1),
+          margin: `${pxToRem(0.5)} 0`,
+          borderBottom: 'none',
+          opacity: 0.45,
+        },
 
-        }
-      }
-    }
+        vertical: {
+          backgroundColor: 'transparent',
+          backgroundImage: `linear-gradient(to right, ${alpha(theme.palette.grey[900], 0)}, ${
+            theme.palette.grey[900]
+          }, ${alpha(theme.palette.grey[900], 0)}) !important`,
+          width: pxToRem(1),
+          height: '100%',
+          margin: `0 ${pxToRem(8)}`,
+          borderRight: 'none',
+        },
+      },
+    },
   };
 }
 
@@ -125,9 +119,9 @@ export function getDesignTokens(mode: 'light' | 'dark' = 'light'): ThemeOptions 
   return {
     palette: {
       mode,
-      // background: {
-      //   default: mode === 'dark' ? '#101f31' : '#ffffff',
-      // },
+      background: {
+        default: mode === 'dark' ? '#1a2035' : '#f0f2f5',
+      },
       // ...colors,
     },
     typography: {
@@ -162,7 +156,8 @@ export function getDesignTokens(mode: 'light' | 'dark' = 'light'): ThemeOptions 
         lineHeight: 30 / 20,
       },
       button: {
-        textTransform: 'initial',
+        textTransform: 'capitalize',
+        fontSize: pxToRem(16),
         fontWeight: 700,
         letterSpacing: 0,
       },
@@ -184,7 +179,7 @@ export function getDesignTokens(mode: 'light' | 'dark' = 'light'): ThemeOptions 
       },
       caption: {
         display: 'inline-block',
-        fontSize: pxToRem(12), // 12px
+        fontSize: pxToRem(12),
         lineHeight: 18 / 12,
         letterSpacing: 0,
         fontWeight: 700,

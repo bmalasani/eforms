@@ -1,24 +1,23 @@
 import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import Icon from '@mui/material/Icon';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import { Colors, Shadow } from '../../types';
 import { Box } from '../Box';
+import Card from './Card';
 
 export interface StatisticsCardProps {
   title: string;
   icon: string;
   count: number | string;
-  gradient?: boolean;
-  variant?: Colors | 'light' | 'dark';
+  gradient?: Colors | 'light' | 'dark';
   shadow?: Shadow | Colors;
 }
 
-function StatisticsCard({ icon, title, count, gradient, shadow, variant }: StatisticsCardProps) {
+function StatisticsCard({ icon, title, count, gradient, shadow }: StatisticsCardProps) {
   return (
-    <Card>
+    <Card shadow={shadow} radius="xl" >
       <Box display="flex" justifyContent="space-between" pt={1} px={2}>
         <Box
           display="flex"
@@ -27,7 +26,6 @@ function StatisticsCard({ icon, title, count, gradient, shadow, variant }: Stati
           width="4rem"
           height="4rem"
           gradient={gradient}
-          variant={variant}
           shadow={shadow}
           radius="lg"
           mt={-3}
@@ -42,10 +40,10 @@ function StatisticsCard({ icon, title, count, gradient, shadow, variant }: Stati
             textAlign: 'right',
           }}
         >
-          <Typography variant="button" fontWeight="light">
+          <Typography variant="button"  fontWeight="light">
             {title}
           </Typography>
-          <Typography variant="h4">{count}</Typography>
+          <Typography variant="h5">{count}</Typography>
         </Box>
       </Box>
       <Divider />

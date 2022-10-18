@@ -1,24 +1,30 @@
 import React from 'react';
-import { AppBar, Box, Container, Stack, Toolbar } from '@mui/material';
 import { IRoutes } from '../../types';
 import { Link } from 'react-router-dom';
 import { useEformsContext } from '../../store';
 import ThemeModeToggle from './ThemeModeToggle';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Container from '@mui/material/Container';
+import { Box } from '../Box';
+import Stack from '@mui/material/Stack';
+import IconButton from '@mui/material/IconButton';
 
 export interface NavBarProps {
   routes?: IRoutes;
   Logo: any;
+  user: any;
   [k: string]: any;
 }
 
-function NavBar({ routes = [], Logo, ...rest }: NavBarProps) {
+function NavBar({ routes = [], Logo, user, ...rest }: NavBarProps) {
   const [state, dispatch] = useEformsContext();
   const setTheme = (checked: boolean) =>
     dispatch({ type: 'SET_THEME', payload: checked ? 'dark' : 'light' });
 
   return (
     <AppBar component="header" {...rest}>
-      <Toolbar role={"navigation"} component={Container}>
+      <Toolbar role={'navigation'} component={Container}>
         <Box component={Link} to="/" aria-label="Go to homepage" sx={{ lineHeight: 0, mr: 2 }}>
           <Logo width={30} />
         </Box>

@@ -1,10 +1,10 @@
 {
   "extends": "@meb/tsconfig/vite.json",
-  "include": ["src", "vite.config.ts"],
+  "include": ["src", "vite.config.ts", "mock.plugin.ts"],
   "compilerOptions": {
     "composite": true,
     "module": "ESNext",
     "moduleResolution": "Node",
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": true
   }
 }

@@ -11,7 +11,7 @@ interface ThemeModeToggleProps {
 export default function ThemeModeToggle(props: ThemeModeToggleProps) {
   return (
     <Tooltip title={props.checked ? 'Turn on the light' : 'Turn off the light'}>
-      <IconButton color="primary"  onClick={() => props.onChange(!props.checked)}>
+      <IconButton color="primary" size='small'  onClick={() => props.onChange(!props.checked)}>
         {props.checked ? (
           <LightModeOutlined fontSize="small" />
         ) : (

@@ -1,51 +1,91 @@
-import React from 'react';
-import { AppBar, Box, Divider, Drawer, Grid, Icon, Stack, Tab, Tabs } from '@mui/material';
-import Footer from '../components/Footer/Footer';
-import NavBar from '../components/Header/NavBar';
-import SvgMuiLogo from '../icons/SvgMuiLogo';
+import { Add, DockRounded, ViewCompactOutlined } from '@mui/icons-material';
+import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
+import { useForm } from 'react-hook-form';
+import { Box, StyledStepper, Typography } from '../components';
+import { Builder } from '../components/Builder';
+import { Card } from '../components/Cards';
+import { TextField } from '../components/TextField';
 
-type Props = {};
-function FormBuilder({}: Props) {
+function FormBuilder() {
+  const { control, handleSubmit, trigger } = useForm();
+
+  const handleNext = (callback: any) => {
+    handleSubmit(() => {
+      console.log('valid');
+      callback && callback();
+    })();
+  };
+
+  const renderNewForm = () => (
+    <Stack
+      direction="column"
+      spacing={4}
+      justifyContent="center"
+      sx={{ margin: 'auto', width: { sm: '400px' } }}
+    >
+      <TextField
+        control={control}
+        rules={{ required: true }}
+        name="formName"
+        label="Form Name"
+        variant="outlined"
+      />
+      <TextField
+        control={control}
+        rules={{ required: true }}
+        name="formGroup"
+        label="Form Group"
+        variant="outlined"
+      />
+      <TextField
+        multiline
+        control={control}
+        name="formDescription"
+        label="Form Description"
+        variant="outlined"
+      />
+    </Stack>
+  );
+
+  const steps: any = [
+    {
+      label: 'New Form',
+      render: renderNewForm,
+      icon: <Add />,
+    },
+    {
+      label: 'Form Details',
+      render: () => <Builder />,
+      icon: <DockRounded />,
+    },
+    {
+      label: 'Form Completion',
+      render: renderNewForm,
+      icon: <ViewCompactOutlined />,
+    },
+  ];
+
   return (
-    <Box sx={{ display: 'flex' }}>
-      <Box component="main" sx={{ flexGrow: 1 }}>
-        <NavBar Logo={SvgMuiLogo} />
-        <Footer />
-      </Box>
-      <Drawer variant="permanent" anchor="right">
-        <AppBar position="static">
-          <Tabs orientation="horizontal">
-            <Tab
-              label="App"
-              icon={
-                <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                  home
-                </Icon>
-              }
-            />
-            <Tab
-              label="Message"
-              icon={
-                <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                  email
-                </Icon>
-              }
-            />
-            <Tab
-              label="Settings"
-              icon={
-                <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                  settings
-                </Icon>
-              }
-            />
-          </Tabs>
-        </AppBar>
-        <Box></Box>
-        <Divider/>
-        <Footer />
-      </Drawer>
-    </Box>
+    <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Stack direction="column" gap={5}>
+        <Card>
+          <Box
+            gradient="info"
+            shadow="info"
+            radius="lg"
+            sx={{
+              mx: 2,
+              p: 1.5,
+              mt: -2.5,
+            }}
+          >
+            <Typography variant="h6">Create New Form </Typography>
+          </Box>
+          <StyledStepper steps={steps} onNext={handleNext} />
+        </Card>
+      </Stack>
+    </Container>
   );
 }
 
