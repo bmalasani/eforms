@@ -1,0 +1,7 @@
+{
+  "ffi": {
+    "prefix": "ffi",
+    "body": ["{ key: '$1', type: '$2',props: {$3},children: [$0]}"],
+    "description": "ffi"
+  }
+}

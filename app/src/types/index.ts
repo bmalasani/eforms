@@ -1,6 +1,6 @@
 export * from './styles';
 
-export interface ReactParent {
+export interface ReactParent extends Record<string, any> {
   children?: any;
 }
 
@@ -12,7 +12,7 @@ export interface IRoute {
   icon?: string;
   route?: string;
   href?: string;
-  isDropDown?:boolean;
-  isFormMenu?:boolean;
+  isDropDown?: boolean;
+  isFormMenu?: boolean;
   routes?: IRoutes;
 }

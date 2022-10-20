@@ -1,4 +1,8 @@
-import { Box, Container, Divider, Typography } from '@mui/material';
+import Container from "@mui/material/Container";
+import Divider from "@mui/material/Divider";
+import { Box } from "../Box";
+import { Typography } from "../Typography";
+
 
 function Footer() {
   return (

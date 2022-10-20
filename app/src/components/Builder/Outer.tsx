@@ -1,13 +1,8 @@
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import Grow from '@mui/material/Grow';
-import Icon from '@mui/material/Icon';
+import { Add, Edit, Remove } from '@mui/icons-material';
+import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-import Paper from '@mui/material/Paper';
-import Popper from '@mui/material/Popper';
 import { useState } from 'react';
 import { FormField } from '.';
-import { Avatar } from '../Avatar';
 import { Box } from '../Box';
 import FieldSaver from './FieldSaver';
 
@@ -23,6 +18,18 @@ type OuterProps = {
 function Outer({ children, disableActions, field, editable, onSaveField }: OuterProps) {
   const [anchorEl, setAnchorEl] = useState<any | null>(null);
   const [isEdit, setIsEdit] = useState<boolean>(false);
+
+  const toggleDrawer = (event: React.KeyboardEvent | React.MouseEvent) => {
+    if (
+      event.type === 'keydown' &&
+      ((event as React.KeyboardEvent).key === 'Tab' ||
+        (event as React.KeyboardEvent).key === 'Shift')
+    ) {
+      return;
+    }
+    setAnchorEl(null);
+    setIsEdit(false);
+  };
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -49,19 +56,27 @@ function Outer({ children, disableActions, field, editable, onSaveField }: Outer
 
   return (
     <Box
+      id="outer_layer"
+      component="section"
       sx={(theme) => ({
         minHeight: '4rem',
         display: 'flex',
         flex: '1 auto',
-        m: 1,
-        my: 5,
-        border: `1px dashed ${theme.palette.primary.main}`,
+        flexDirection: 'column',
+        mt: 4,
+        border: `1px dashed rgba(${Math.floor(Math.random() * 255)},
+          ${Math.floor(Math.random() * 255)},
+          ${Math.floor(Math.random() * 255)},
+          1
+        )`,
         position: 'relative',
       })}
     >
       {(!disableActions || editable) && (
         <>
           <Box
+            id="outer_menu"
+            component="div"
             sx={(theme) => ({
               display: 'flex',
               flexFlow: 'row wrap',
@@ -91,7 +106,7 @@ function Outer({ children, disableActions, field, editable, onSaveField }: Outer
                   color="success"
                   onClick={handleEditClick}
                 >
-                  <Icon>edit</Icon>
+                  <Edit />
                 </IconButton>
                 <IconButton
                   size="small"
@@ -106,7 +121,7 @@ function Outer({ children, disableActions, field, editable, onSaveField }: Outer
                   color="error"
                   onClick={handleRemoveClick}
                 >
-                  <Icon>remove</Icon>
+                  <Remove />
                 </IconButton>
               </>
             )}
@@ -124,14 +139,19 @@ function Outer({ children, disableActions, field, editable, onSaveField }: Outer
                 color="primary"
                 onClick={handleClick}
               >
-                <Icon fontSize="small">add</Icon>
+                <Add />
               </IconButton>
             )}
           </Box>
 
           {field && anchorEl && (
             <>
-              <Popper
+              <Drawer anchor={'right'} open={open} onClose={toggleDrawer}>
+                <Box sx={{ width: { md: '350px', lg: '500px' }, p: { md: 3, lg: 5 } }}>
+                  <FieldSaver field={field} isEdit={isEdit} onSave={handleSave} />
+                </Box>
+              </Drawer>
+              {/* <Popper
                 anchorEl={anchorEl}
                 popperRef={null}
                 open={open}
@@ -181,7 +201,7 @@ function Outer({ children, disableActions, field, editable, onSaveField }: Outer
                     </Paper>
                   </Grow>
                 )}
-              </Popper>
+              </Popper> */}
             </>
           )}
         </>

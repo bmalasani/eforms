@@ -9,7 +9,7 @@ import Card from './Card';
 
 export interface StatisticsCardProps {
   title: string;
-  icon: string;
+  icon: string | any;
   count: number | string;
   gradient?: Colors | 'light' | 'dark';
   shadow?: Shadow | Colors;
@@ -17,7 +17,7 @@ export interface StatisticsCardProps {
 
 function StatisticsCard({ icon, title, count, gradient, shadow }: StatisticsCardProps) {
   return (
-    <Card shadow={shadow} radius="xl" >
+    <Card shadow={shadow} radius="xl">
       <Box display="flex" justifyContent="space-between" pt={1} px={2}>
         <Box
           display="flex"
@@ -30,9 +30,13 @@ function StatisticsCard({ icon, title, count, gradient, shadow }: StatisticsCard
           radius="lg"
           mt={-3}
         >
-          <Icon fontSize="medium" color="inherit">
-            {icon}
-          </Icon>
+          {typeof icon === 'string' ? (
+            <Icon fontSize="medium" color="inherit">
+              {icon}
+            </Icon>
+          ) : (
+            icon 
+          )}
         </Box>
         <Box
           sx={{
@@ -40,18 +44,14 @@ function StatisticsCard({ icon, title, count, gradient, shadow }: StatisticsCard
             textAlign: 'right',
           }}
         >
-          <Typography variant="button"  fontWeight="light">
+          <Typography variant="button" fontWeight="light">
             {title}
           </Typography>
           <Typography variant="h5">{count}</Typography>
         </Box>
       </Box>
       <Divider />
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        flexDirection="row-reverse"
-      >
+      <Box display="flex" justifyContent="space-between" flexDirection="row-reverse">
         <Button LinkComponent={Link}>Show All</Button>
       </Box>
     </Card>

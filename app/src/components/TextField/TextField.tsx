@@ -22,8 +22,10 @@ function CustomTextField({ name, control, rules, defaultValue, ...rest }: Custom
 
   return (
     <TextField
-      {...rest}
+      variant='outlined'
       fullWidth
+      size='small'
+      {...rest}
       error={error !== undefined}
       helperText={error === undefined ? rest.helperText : error.message}
       onChange={onChange}

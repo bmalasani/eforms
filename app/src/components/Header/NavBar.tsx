@@ -9,6 +9,7 @@ import Container from '@mui/material/Container';
 import { Box } from '../Box';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
+import NavSearch from './NavSearch';
 
 export interface NavBarProps {
   routes?: IRoutes;
@@ -28,7 +29,17 @@ function NavBar({ routes = [], Logo, user, ...rest }: NavBarProps) {
         <Box component={Link} to="/" aria-label="Go to homepage" sx={{ lineHeight: 0, mr: 2 }}>
           <Logo width={30} />
         </Box>
-        <Box sx={{ flexGrow: 1 }} />
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: 'flex',
+            justifyContent: 'center',
+            justifyItems: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <NavSearch />
+        </Box>
         <Stack direction="row" spacing={1}>
           <ThemeModeToggle checked={state.theme === 'dark'} onChange={setTheme} />
         </Stack>

@@ -31,9 +31,9 @@ function CustomSelect({ name, control, rules, defaultValue, items, ...rest }: Cu
   });
 
   return (
-    <FormControl required error={error !== undefined} variant="standard" disabled={rest.disabled}>
-      <InputLabel>{rest.label}</InputLabel>
-      <Select {...field} label={rest.label}>
+    <FormControl fullWidth error={error !== undefined} variant="standard" size='small' disabled={rest.disabled}>
+      <InputLabel variant='outlined' size='small'>{rest.label}</InputLabel>
+      <Select variant="outlined" size='small' fullWidth {...rest} {...field}>
         <MenuItem disabled value=""></MenuItem>
         {items.map((i) => (
           <MenuItem key={i.label} value={i.value}>

@@ -1,6 +1,6 @@
+import { Add, Assignment, AssignmentIndOutlined, Drafts, Task } from '@mui/icons-material';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Icon from '@mui/material/Icon';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import React from 'react';
@@ -31,7 +31,7 @@ function Home() {
               variant="dot"
             >
               <Avatar gradient="info" shadow="info">
-                <Icon>addtask</Icon>
+                <Add />
               </Avatar>
             </Badge>
           </IconButton>
@@ -46,7 +46,7 @@ function Home() {
                       <StatisticsCard
                         shadow="success"
                         gradient="success"
-                        icon="task"
+                        icon={<Task />}
                         title="Requests"
                         count={stats.requests}
                       />
@@ -57,7 +57,7 @@ function Home() {
                       <StatisticsCard
                         shadow="error"
                         gradient="error"
-                        icon="assignment"
+                        icon={<Assignment />}
                         title="Approvals"
                         count={stats.approvals}
                       />
@@ -68,7 +68,7 @@ function Home() {
                       <StatisticsCard
                         shadow="warning"
                         gradient="warning"
-                        icon="assignment_ind"
+                        icon={<AssignmentIndOutlined />}
                         title="Actions"
                         count={stats.actions}
                       />
@@ -79,7 +79,7 @@ function Home() {
                       <StatisticsCard
                         shadow="xl"
                         gradient="dark"
-                        icon="drafts"
+                        icon={<Drafts />}
                         title="Drafts"
                         count={stats.drafts}
                       />

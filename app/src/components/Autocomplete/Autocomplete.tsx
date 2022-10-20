@@ -49,6 +49,7 @@ function CustomAutocomplete({
       fullWidth
       onChange={onChange}
       onBlur={onBlur}
+      size="small"
       value={value}
       options={options}
       renderTags={(value: readonly string[], getTagProps) => (
@@ -60,14 +61,13 @@ function CustomAutocomplete({
       )}
       renderInput={(params) => (
         <TextField
+          variant="outlined"
           {...params}
           name={fieldName}
           inputRef={ref}
           error={error !== undefined}
           helperText={error === undefined ? rest.helperText : error.message}
-          variant="outlined"
           label={label}
-          placeholder="Favorites"
         />
       )}
     />
