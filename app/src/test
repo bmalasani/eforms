@@ -1,0 +1,169 @@
+{
+  "formName": "Sample Form",
+  "formGroup": { "label": "Sample", "value": "Sample" },
+  "formDescription": "A sample form",
+  "formDetails": {
+    "key": "0",
+    "type": "main",
+    "props": {},
+    "children": [
+      {
+        "key": "00",
+        "type": "section",
+        "children": [
+          {
+            "key": "000",
+            "type": "row",
+            "children": [
+              {
+                "key": "0000",
+                "type": "column",
+                "children": [
+                  {
+                    "key": "00000",
+                    "type": "text",
+                    "children": [],
+                    "props": { "count": 1, "label": "text", "name": "text" }
+                  },
+                  {
+                    "key": "00001",
+                    "type": "check",
+                    "children": [],
+                    "props": { "count": 1, "label": "check", "name": "check" }
+                  },
+                  {
+                    "key": "00002",
+                    "type": "radio",
+                    "children": [],
+                    "props": {
+                      "count": 1,
+                      "label": "group",
+                      "name": "group",
+                      "items": [
+                        { "undefined": "", "label": "option1", "value": "1" },
+                        { "undefined": "", "label": "option2", "value": "2" }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "00003",
+                    "type": "select",
+                    "children": [],
+                    "props": {
+                      "count": 1,
+                      "label": "select",
+                      "name": "select",
+                      "items": [
+                        {
+                          "undefined": "",
+                          "label": "option1",
+                          "value": "option1"
+                        },
+                        { "undefined": "", "label": "option2", "value": "2" },
+                        { "undefined": "", "label": "option3", "value": "3" }
+                      ]
+                    }
+                  }
+                ],
+                "props": { "count": "2", "sm": 12, "md": 6 }
+              },
+              {
+                "key": "0001",
+                "type": "column",
+                "children": [
+                  {
+                    "key": "00010",
+                    "type": "lookup",
+                    "children": [],
+                    "props": {
+                      "count": 1,
+                      "label": "Lookup",
+                      "name": "lookup",
+                      "items": [
+                        { "undefined": "", "label": "test", "value": "1" },
+                        { "undefined": "", "label": "test", "value": "2" }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "00011",
+                    "type": "date",
+                    "children": [],
+                    "props": { "count": 1, "label": "Date", "name": "date" }
+                  },
+                  {
+                    "key": "00012",
+                    "type": "time",
+                    "children": [],
+                    "props": { "count": 1, "label": "Time", "name": "time" }
+                  },
+                  {
+                    "key": "00013",
+                    "type": "switch",
+                    "children": [],
+                    "props": { "count": 1, "label": "switch", "name": "switch" }
+                  },
+                  {
+                    "key": "00014",
+                    "type": "label",
+                    "children": [],
+                    "props": { "count": 1, "label": "A label" }
+                  }
+                ],
+                "props": { "count": "2", "sm": 12, "md": 6 }
+              }
+            ],
+            "props": { "count": 1 }
+          }
+        ],
+        "props": {
+          "count": 1,
+          "title": "Details",
+          "description": "To test all elements"
+        }
+      }
+    ]
+  },
+  "subject": "test",
+  "additionalReceipients": "sdfwdf",
+  "submitterMessage": "comited",
+  "approverMessage": "sflj",
+  "compeletedMessage": "jjljsldjf",
+  "formWorkFlow": [
+    {
+      "undefined": "",
+      "approverLevel": { "label": "Reviewer", "value": "Reviewer" },
+      "approver": "bmulpuri",
+      "includeAttachments": true,
+      "disableNotification": true
+    },
+    {
+      "undefined": "",
+      "approverLevel": {
+        "label": "Department Approver",
+        "value": "DepartmentApprover"
+      },
+      "approver": "mvan",
+      "autoApproval": true,
+      "includeAttachments": true,
+      "disableNotification": true
+    },
+    {
+      "undefined": "",
+      "approverLevel": {
+        "label": "Functional Approver",
+        "value": "FunctionalApprover"
+      },
+      "approver": "sdfk",
+      "autoApproval": true,
+      "includeAttachments": true,
+      "disableNotification": true
+    },
+    {
+      "undefined": "",
+      "approverLevel": { "label": "Action Taker", "value": "ActionTaker" },
+      "approver": "ssdf",
+      "disableNotification": true
+    }
+  ]
+}

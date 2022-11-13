@@ -34,8 +34,7 @@ const columns: ColumnProps[] = [
           <Tooltip key={ind} title={f?.approver} placeholder="top">
             <Avatar
               alt="name"
-              gradient
-              bgColor='primary'
+              gradient='primary'
               sx={(theme) => ({
                 width: theme.spacing(4),
                 height: theme.spacing(4),

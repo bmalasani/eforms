@@ -1,89 +1,294 @@
-import { Add, DockRounded, ViewCompactOutlined } from '@mui/icons-material';
-import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
-import { useForm } from 'react-hook-form';
-import { Box, StyledStepper, Typography } from '../components';
-import { Builder } from '../components/Builder';
+import { FormProvider, useForm } from 'react-hook-form';
 import { Card } from '../components/Cards';
-import { TextField } from '../components/TextField';
+import Container from '@mui/material/Container';
+import { FormField, Renderer } from '../components/Builder';
+import { Box, StyledStepper, Typography } from '../components';
+import { useMemo, useState } from 'react';
 
 function FormBuilder() {
-  const { control, handleSubmit, trigger } = useForm();
+  const form = useForm();
+  const { handleSubmit } = form;
+  const [activeStep, setActiveStep] = useState(0);
 
-  const handleNext = (callback: any) => {
-    handleSubmit(() => {
-      console.log('valid');
-      callback && callback();
-    })();
-  };
-
-  const renderNewForm = () => (
-    <Stack
-      direction="column"
-      spacing={4}
-      justifyContent="center"
-      sx={{ margin: 'auto', width: { sm: '400px' } }}
-    >
-      <TextField
-        control={control}
-        rules={{ required: true }}
-        name="formName"
-        label="Form Name"
-        variant="outlined"
-      />
-      <TextField
-        control={control}
-        rules={{ required: true }}
-        name="formGroup"
-        label="Form Group"
-        variant="outlined"
-      />
-      <TextField
-        multiline
-        control={control}
-        name="formDescription"
-        label="Form Description"
-        variant="outlined"
-      />
-    </Stack>
+  const formInitialFields = useMemo<FormField>(
+    () => ({
+      key: 'stackooo',
+      type: 'stack',
+      props: {
+        mx: { sm: 0, md: 18 },
+      },
+      children: [
+        {
+          key: 'sction0009',
+          type: 'section',
+          props: {
+            title: 'Core',
+            description: 'enter form details',
+          },
+          children: [
+            {
+              key: 'formName',
+              type: 'text',
+              props: {
+                label: 'Form Name',
+                name: 'formName',
+                rules: { required: true },
+              },
+            },
+            {
+              key: 'formGroup',
+              type: 'lookup',
+              props: {
+                label: 'Form Group',
+                name: 'formGroup',
+                items: [{ label: 'test', value: 'test' }],
+                rules: { required: true },
+                creatable: true,
+              },
+            },
+            {
+              key: 'formDescr',
+              type: 'text',
+              props: {
+                label: 'Form Description',
+                name: 'formDescription',
+                multiline: true,
+                rules: { required: true },
+              },
+            },
+          ],
+        },
+      ],
+    }),
+    []
   );
 
-  const steps: any = [
+  const formBuilderFields = useMemo(
+    () => ({
+      key: 'builder00',
+      type: 'builder',
+      props: {},
+      children: [],
+    }),
+    []
+  );
+
+  const formCompletionFields = useMemo<FormField>(
+    () => ({
+      key: 'stack',
+      type: 'stack',
+      props: {
+        mx: { sm: 0, md: 18 },
+      },
+      children: [
+        {
+          key: 'sction0009',
+          type: 'section',
+          props: {
+            title: 'Workflow',
+            description: 'create new workflow',
+          },
+          children: [
+            {
+              key: 'props01',
+              type: 'array',
+              props: {
+                label: 'Add Flow',
+                name: 'formWorkFlow',
+                fields: [
+                  {
+                    key: 'approverLevel',
+                    type: 'lookup',
+                    props: {
+                      label: 'Approver Level',
+                      name: 'approverLevel',
+                      items: [
+                        { label: 'Requestor', value: 'Requestor' },
+                        { label: 'Reviewer', value: 'Reviewer' },
+                        { label: 'Department Approver', value: 'DepartmentApprover' },
+                        { label: 'Functional Approver', value: 'FunctionalApprover' },
+                        { label: 'Action Taker', value: 'ActionTaker' },
+                      ],
+                      rules: { required: true },
+                    },
+                  },
+                  {
+                    key: 'approver001',
+                    type: 'text',
+                    props: {
+                      label: 'Approver',
+                      name: 'approver',
+                    },
+                  },
+                  {
+                    key: 'approverDelegate',
+                    type: 'text',
+                    props: {
+                      label: 'Approver Delegates',
+                      name: 'approverDelegate',
+                      multiline: true,
+                    },
+                  },
+                  {
+                    key: 'autoApproval',
+                    type: 'switch',
+                    props: {
+                      label: 'Auto Approval',
+                      name: 'autoApproval',
+                    },
+                  },
+                  {
+                    key: 'includeAttachments',
+                    type: 'switch',
+                    props: {
+                      label: 'Include Attachments',
+                      name: 'includeAttachments',
+                    },
+                  },
+                  {
+                    key: 'disableNotification',
+                    type: 'switch',
+                    props: {
+                      label: 'Disable Notification',
+                      name: 'disableNotification',
+                      defaultValue: true,
+                    },
+                  },
+                ],
+                boxSX: {
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(3, 1fr)',
+                  gridTemplateRows: 'repeat(2, 1fr)',
+                  gridColumnGap: '32px',
+                  gridRowGap: '32px',
+                },
+              },
+            },
+          ],
+        },
+        {
+          key: 'sction0119',
+          type: 'section',
+          props: {
+            title: 'Settings',
+            description: 'create notification',
+          },
+          children: [
+            {
+              key: 'props01',
+              type: 'text',
+              props: {
+                label: 'Subject',
+                name: 'subject',
+              },
+            },
+            {
+              key: 'props0121',
+              type: 'text',
+              props: {
+                label: 'Additional Receipients',
+                name: 'additionalReceipients',
+                multiline: true,
+              },
+            },
+            {
+              key: 'activeTill',
+              type: 'date',
+              props: {
+                label: 'Active Till',
+                name: 'activeTill',
+              },
+            },
+            {
+              key: 'submitterMessage',
+              type: 'text',
+              props: {
+                label: 'Submitter Message',
+                name: 'submitterMessage',
+              },
+            },
+            {
+              key: 'approverMessage',
+              type: 'text',
+              props: {
+                label: 'Approver Message',
+                name: 'approverMessage',
+              },
+            },
+            {
+              key: 'compeletedMessage',
+              type: 'text',
+              props: {
+                label: 'Completed Message',
+                name: 'compeletedMessage',
+              },
+            },
+          ],
+        },
+      ],
+    }),
+    []
+  );
+
+  const steps: { label: string; fields?: any }[] = [
     {
       label: 'New Form',
-      render: renderNewForm,
-      icon: <Add />,
+      fields: formInitialFields,
     },
     {
       label: 'Form Details',
-      render: () => <Builder />,
-      icon: <DockRounded />,
+      fields: formBuilderFields,
     },
     {
       label: 'Form Completion',
-      render: renderNewForm,
-      icon: <ViewCompactOutlined />,
+      fields: formCompletionFields,
     },
   ];
+
+  const handleNext = async () => {
+    handleSubmit(() => {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    })();
+  };
+
+  const handleFinish = async () => {
+    console.log(form.getValues());
+  };
+
+  const handleBack = async () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Stack direction="column" gap={5}>
-        <Card>
-          <Box
-            gradient="info"
-            shadow="info"
-            radius="lg"
-            sx={{
-              mx: 2,
-              p: 1.5,
-              mt: -2.5,
-            }}
-          >
-            <Typography variant="h6">Create New Form </Typography>
-          </Box>
-          <StyledStepper steps={steps} onNext={handleNext} />
-        </Card>
+        <FormProvider {...form}>
+          <Card>
+            <Box
+              gradient="success"
+              shadow="success"
+              radius="lg"
+              sx={{
+                mx: 2,
+                p: 1.5,
+                mt: -2.5,
+                mb: 3,
+              }}
+            >
+              <Typography variant="h6">CREATE NEW FORM </Typography>
+            </Box>
+            <StyledStepper
+              steps={steps}
+              activeStep={activeStep}
+              onBack={handleBack}
+              onNext={handleNext}
+              onFinish={handleFinish}
+            >
+              <Renderer field={steps[activeStep].fields}></Renderer>
+            </StyledStepper>
+          </Card>
+        </FormProvider>
       </Stack>
     </Container>
   );

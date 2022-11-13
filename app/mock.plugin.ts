@@ -61,7 +61,7 @@ export default (options?: any): Plugin => {
             next();
           } else {
             console.log(req.url, options);
-            const match = options.mocks.filter((x) => x.path === req.url);
+            const match = options.mocks.filter((x: { path: string | undefined; }) => x.path === req.url);
             console.log(match);
             if (match) {
               res.setHeader('Content-Type', 'application/json');

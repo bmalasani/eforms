@@ -12,6 +12,7 @@ export interface CustomDatePickerProps {
   label: string;
   defaultValue?: any;
   helperText?: any;
+  [k: string]: any;
 }
 
 function CustomDatePicker({
@@ -36,21 +37,23 @@ function CustomDatePicker({
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
-        disableFuture
+        disablePast
         label={label}
         openTo="day"
         views={['year', 'month', 'day']}
         value={value}
         onChange={onChange}
+        inputRef={ref}
         renderInput={(params) => (
           <TextField
+            size="small"
             {...params}
             name={fieldName}
-            inputRef={ref}
             error={error !== undefined}
             helperText={error === undefined ? rest.helperText : error.message}
           />
         )}
+        {...rest}
       />
     </LocalizationProvider>
   );

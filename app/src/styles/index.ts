@@ -7,16 +7,13 @@ export function getThemedComponents(theme: Theme): Theme['components'] {
     MuiAppBar: {
       defaultProps: {
         position: 'sticky',
-        variant: 'outlined',
+        variant: 'elevation',
         color: 'transparent',
         elevation: 0,
       },
       styleOverrides: {
         root: {
           backdropFilter: 'blur(20px)',
-          boxShadow: `inset 0px -1px 1px ${
-            theme.palette.mode === 'dark' ? theme.palette.primary.main : theme.palette.grey[100]
-          }`,
         },
       },
     },

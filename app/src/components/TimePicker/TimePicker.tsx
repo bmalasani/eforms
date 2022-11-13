@@ -5,13 +5,14 @@ import { Control, FieldValues, useController, UseControllerProps } from 'react-h
 import { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 
-export interface CustomTimePickerProps  {
+export interface CustomTimePickerProps {
   name: string;
   control?: Control<FieldValues, any> | undefined;
   rules?: UseControllerProps['rules'];
   label: string;
   defaultValue?: any;
   helperText?: any;
+  [k: string]: any;
 }
 
 function CustomTimePicker({
@@ -39,11 +40,12 @@ function CustomTimePicker({
         label={label}
         value={value}
         onChange={onChange}
+        inputRef={ref}
         renderInput={(params) => (
           <TextField
+            size="small"
             {...params}
             name={fieldName}
-            inputRef={ref}
             error={error !== undefined}
             helperText={error === undefined ? rest.helperText : error.message}
           />

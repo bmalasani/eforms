@@ -23,7 +23,7 @@ function Home() {
           <Typography variant="h4" bgColor="info">
             Welcome Nani Malasani !
           </Typography>
-          <IconButton aria-label="New Request">
+          {/* <IconButton aria-label="New Request" sx={{ display: { xs: 'none', md: 'initial' } }}>
             <Badge
               bgColor="success"
               overlap="circular"
@@ -34,7 +34,7 @@ function Home() {
                 <Add />
               </Avatar>
             </Badge>
-          </IconButton>
+          </IconButton> */}
         </Stack>
         <React.Suspense fallback={<StatsSkeleton />}>
           <Await resolve={stats}>

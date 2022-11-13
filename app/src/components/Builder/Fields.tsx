@@ -1,4 +1,5 @@
 import FormLabel from '@mui/material/FormLabel';
+import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Unstable_Grid2';
 import { get } from '../../utils';
 import { Autocomplete } from '../Autocomplete';
@@ -11,13 +12,17 @@ import { Select } from '../Select';
 import { Switch } from '../Switch';
 import { TextField } from '../TextField';
 import { TimePicker } from '../TimePicker';
+import Builder from './Builder';
 import FieldArray from './FieldArray';
 
 export const FieldTypes = [
   'main',
+  'builder',
   'row',
   'column',
   'section',
+  'stack',
+  'box',
   'text',
   'check',
   'radio',
@@ -31,15 +36,17 @@ export const FieldTypes = [
 ] as const;
 
 export const PropTypes = [
-  'title',
-  'description',
-  'label',
-  'name',
   'defaultValue',
-  'value',
+  'description',
+  'fields',
   'items',
+  'label',
   'lookup',
+  'name',
   'rules',
+  'title',
+  'value',
+  'array',
 ] as const;
 
 type PropsRecord = {
@@ -60,14 +67,14 @@ export type FieldValue = {
   fields?: FormField[];
 };
 
-const FieldProps: Record<string, FormField> = {
+const FieldProps: Record<typeof PropTypes[number] | string, FormField> = {
   sm: {
     key: 'sm00',
     type: 'select',
     props: {
       label: 'width in mobile devices',
       name: 'sm',
-      items: [...Array(12).keys()].map((i) => ({ label: `${i + 1}`, value: `${i + 1}` })),
+      items: [...Array(12).keys()].map((i) => ({ label: `${i + 1}`, value: i + 1 })),
     },
   },
   md: {
@@ -76,7 +83,7 @@ const FieldProps: Record<string, FormField> = {
     props: {
       label: 'width in desktop devices',
       name: 'md',
-      items: [...Array(12).keys()].map((i) => ({ label: `${i + 1}`, value: `${i + 1}` })),
+      items: [...Array(12).keys()].map((i) => ({ label: `${i + 1}`, value: i + 1 })),
     },
   },
   label: {
@@ -208,11 +215,90 @@ const FieldProps: Record<string, FormField> = {
       ],
     },
   },
+  array: {
+    key: 'fieldLookup',
+    type: 'array',
+    props: {
+      label: 'Fields',
+      name: 'fields',
+      boxSX: {
+        flexDirection: 'column',
+      },
+      fields: [
+        {
+          key: 'key009',
+          type: 'text',
+          props: {
+            label: 'Key',
+            name: 'key',
+            rules: { required: true },
+          },
+        },
+        {
+          key: 'type008',
+          type: 'select',
+          props: {
+            label: 'Type',
+            name: 'type',
+            items: FieldTypes.filter((_f, ind) => ind > 1).map((field) => ({
+              label: field,
+              value: field,
+            })),
+            rules: { required: true },
+          },
+        },
+        {
+          key: 'label009',
+          type: 'text',
+          props: {
+            label: 'Label',
+            name: 'label',
+            rules: { required: true },
+          },
+        },
+        {
+          key: 'name0000',
+          type: 'text',
+          props: {
+            label: 'Name',
+            name: 'name',
+            rules: { required: true },
+          },
+        },
+        {
+          key: 'props01',
+          type: 'array',
+          props: {
+            label: 'Field Props',
+            name: 'props',
+            fields: [
+              {
+                key: 'name01',
+                type: 'text',
+                props: {
+                  label: 'label',
+                  name: 'label',
+                },
+              },
+              {
+                key: 'value01',
+                type: 'text',
+                props: {
+                  label: 'value',
+                  name: 'value',
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
+  },
 };
 
 export const Fields: Record<typeof FieldTypes[number], FieldValue> = {
   main: {
-    childrenTypes: ['section', 'row'],
+    childrenTypes: ['section', 'row', 'stack', 'box'],
     canAddMultiple: false,
     fields: [FieldProps.props],
     component: ({ children, ...props }: any) => (
@@ -221,11 +307,33 @@ export const Fields: Record<typeof FieldTypes[number], FieldValue> = {
       </Box>
     ),
   },
+  builder: {
+    childrenTypes: ['section', 'row', 'stack', 'box'],
+    canAddMultiple: false,
+    fields: [FieldProps.props],
+    component: ({ children, ...props }: any) => <Builder {...props}></Builder>,
+  },
   section: {
-    childrenTypes: ['row'],
+    childrenTypes: ['row', 'stack', 'box'],
     canAddMultiple: false,
     fields: [FieldProps.title, FieldProps.description, FieldProps.props],
     component: ({ children, ...props }: any) => <Section {...props}>{children}</Section>,
+  },
+  stack: {
+    childrenTypes: FieldTypes.filter((x, i) => i > 1),
+    canAddMultiple: true,
+    fields: [FieldProps.props],
+    component: ({ children, ...props }: any) => (
+      <Stack gap={3} {...props}>
+        {children}
+      </Stack>
+    ),
+  },
+  box: {
+    childrenTypes: FieldTypes.filter((x, i) => i > 1),
+    canAddMultiple: true,
+    fields: [FieldProps.props],
+    component: ({ children, ...props }: any) => <Box {...props}>{children}</Box>,
   },
   row: {
     childrenTypes: ['column'],
@@ -238,14 +346,10 @@ export const Fields: Record<typeof FieldTypes[number], FieldValue> = {
     ),
   },
   column: {
-    childrenTypes: FieldTypes.filter((x, i) => i > 3),
+    childrenTypes: FieldTypes.filter((x, i) => i > 1),
     canAddMultiple: true,
     fields: [FieldProps.sm, FieldProps.md, FieldProps.props],
-    component: ({ children, ...props }: any) => (
-      <Grid item {...props}>
-        {children}
-      </Grid>
-    ),
+    component: ({ children, ...props }: any) => <Grid {...props}>{children}</Grid>,
   },
   check: {
     childrenTypes: [],
@@ -312,7 +416,7 @@ export const Fields: Record<typeof FieldTypes[number], FieldValue> = {
   array: {
     childrenTypes: [],
     canAddMultiple: false,
-    fields: [FieldProps.label, FieldProps.name, FieldProps.props],
+    fields: [FieldProps.array, FieldProps.props],
     component: ({ children, ...props }: any) => <FieldArray {...props} />,
   },
 };

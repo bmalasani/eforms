@@ -1,6 +1,7 @@
 import { Check } from '@mui/icons-material';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Step from '@mui/material/Step';
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
@@ -19,12 +20,12 @@ const Connector = styled(StepConnector)(({ theme }) => ({
   },
   [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {
-      borderColor: theme.palette.primary.main,
+      borderColor: theme.palette.success.main,
     },
   },
   [`&.${stepConnectorClasses.completed}`]: {
     [`& .${stepConnectorClasses.line}`]: {
-      borderColor: theme.palette.primary.main,
+      borderColor: theme.palette.success.main,
     },
   },
   [`& .${stepConnectorClasses.line}`]: {
@@ -41,10 +42,10 @@ const StepIconRoot = styled('div')<{ ownerState: { active?: boolean } }>(
     height: 22,
     alignItems: 'center',
     ...(ownerState.active && {
-      color: theme.palette.primary.main,
+      color: theme.palette.success.main,
     }),
     '& .StepIcon-completedIcon': {
-      color: theme.palette.primary.main,
+      color: theme.palette.success.main,
       zIndex: 1,
       fontSize: 18,
     },
@@ -74,51 +75,53 @@ function StepIcon(props: StepIconProps) {
 export interface StyledStepperProps {
   steps: {
     label: string;
-    icon?: string;
-    render?: Function;
   }[];
   children?: any;
-  onNext?: Function;
-  onBack?: Function;
-  onFinish?: Function;
+  activeStep: number;
+  onNext?: any;
+  onBack?: any;
+  onFinish?: any;
 }
 
-function StyledStepper({ steps, children, onNext, onBack, onFinish }: StyledStepperProps) {
-  const [activeStep, setActiveStep] = useState(0);
-  const handleNext = async () => {
-    if (steps.length === activeStep + 1) {
-      onFinish && (await onFinish());
-    } else {
-      if (onNext) await onNext(() => setActiveStep((prevActiveStep) => prevActiveStep + 1));
-      else setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    }
-  };
-
-  const handleBack = async () => {
-    if (onBack) await onBack(() => setActiveStep((prevActiveStep) => prevActiveStep - 1));
-    else setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
+function StyledStepper({
+  steps,
+  children,
+  activeStep,
+  onNext,
+  onBack,
+  onFinish,
+}: StyledStepperProps) {
   return (
     <Stack component={Container} direction="column" spacing={4} sx={{ mt: 3 }}>
       <Stepper alternativeLabel activeStep={activeStep} connector={<Connector />}>
         {steps.map((s) => (
           <Step key={s.label}>
-            <StepLabel icon={s.icon} StepIconComponent={StepIcon}>
-              {s.label}
-            </StepLabel>
+            <StepLabel StepIconComponent={StepIcon}>{s.label}</StepLabel>
           </Step>
         ))}
       </Stepper>
-      <Box sx={{ width: '100%' }}>
-        {steps[activeStep].render ? steps[activeStep].render!() : children}
-      </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-        <Button color="inherit" disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 1 }}>
+      <Box sx={{ width: '100%', p: 2 }}>{children}</Box>
+      <Divider />
+      <Box sx={{ display: 'flex', flexDirection: 'row', p: 3, pt: 0 }}>
+        <Button
+          sx={{ borderRadius: 10 }}
+          variant="outlined"
+          color="success"
+          disabled={activeStep === 0}
+          onClick={onBack}
+        >
           Back
         </Button>
         <Box sx={{ flex: '1 1 auto' }} />
-        <Button onClick={handleNext}>{activeStep === steps.length - 1 ? 'Finish' : 'Next'}</Button>
+        <Button
+          disabled={activeStep === steps.length}
+          sx={{ borderRadius: 10 }}
+          color="success"
+          variant="contained"
+          onClick={() => (activeStep < steps.length - 1 ? onNext() : onFinish())}
+        >
+          {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+        </Button>
       </Box>
     </Stack>
   );

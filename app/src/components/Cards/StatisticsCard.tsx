@@ -35,7 +35,7 @@ function StatisticsCard({ icon, title, count, gradient, shadow }: StatisticsCard
               {icon}
             </Icon>
           ) : (
-            icon 
+            icon
           )}
         </Box>
         <Box
@@ -52,7 +52,30 @@ function StatisticsCard({ icon, title, count, gradient, shadow }: StatisticsCard
       </Box>
       <Divider />
       <Box display="flex" justifyContent="space-between" flexDirection="row-reverse">
-        <Button LinkComponent={Link}>Show All</Button>
+        <Button
+          sx={(theme) => {
+            return {
+              minHeight: 24,
+              display: 'flex',
+              m: 1,
+              alignItems: 'center',
+              paddingLeft: theme.spacing(1),
+              color: theme.palette.text.secondary,
+              fontSize: theme.typography.pxToRem(14),
+              borderRadius: 10,
+              cursor: 'pointer',
+              transitionProperty: 'all',
+              transitionDuration: '150ms',
+              '&:hover': {
+                color: theme.palette.text.primary,
+                background: theme.palette.grey[200],
+              },
+            };
+          }}
+          LinkComponent={Link}
+        >
+          Show All
+        </Button>
       </Box>
     </Card>
   );

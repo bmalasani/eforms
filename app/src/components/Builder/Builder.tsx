@@ -1,21 +1,29 @@
-import Button from '@mui/material/Button';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useFormContext } from 'react-hook-form';
+import Button from '@mui/material/Button';
 import { FormField } from '.';
-import { first } from '../../utils';
 import { Box } from '../Box';
 import Preview from './Preview';
-import Renderer from './Renderer';
+import Designer from './Designer';
+import { first } from '../../utils';
 
 function Builder() {
   const { control } = useForm<any>();
+  const { setValue, getValues } = useFormContext();
+
   const formMain: FormField = {
     key: '0',
     type: 'main',
     props: {},
     children: [],
   };
-  const [details, setDetails] = useState<FormField>(formMain);
+
+  const formDetails = getValues('formDetails') || formMain;
+
+  const formName = getValues('formName') || '--';
+
+  const [details, setDetails] = useState<FormField>(formDetails);
+
   const [open, setOpen] = useState(false);
 
   const findChildField = (field: FormField, key: string | number): FormField | null => {
@@ -62,19 +70,20 @@ function Builder() {
             if (ind !== undefined && ind >= 0) f.children?.splice(ind, 1);
           }
         }
+        setValue('formDetails', { ...ps });
         return { ...ps };
       });
     };
 
   const renderChildren = (field: FormField, key?: string | number) => (
-    <Renderer control={control} isDesign onSaveField={handleOnSave(field)} field={field} key={key}>
+    <Designer control={control} onSaveField={handleOnSave(field)} field={field} key={key}>
       <>
         {field.children &&
           field.children.map((f, i) => {
             return renderChildren(f, `${f.key || ''}${i}`);
           })}
       </>
-    </Renderer>
+    </Designer>
   );
 
   return (
@@ -85,7 +94,12 @@ function Builder() {
         </Button>
       </Box>
       {renderChildren(details)}
-      <Preview field={details} handleClose={() => setOpen(false)} open={open}></Preview>
+      <Preview
+        formName={formName}
+        field={details}
+        handleClose={() => setOpen(false)}
+        open={open}
+      ></Preview>
     </Box>
   );
 }

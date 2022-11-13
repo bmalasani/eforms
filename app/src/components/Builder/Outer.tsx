@@ -47,10 +47,10 @@ function Outer({ children, disableActions, field, editable, onSaveField }: Outer
     onSaveField && onSaveField(fc, isEdit);
   };
 
-  const handleClose = () => {
-    setIsEdit(false);
-    setAnchorEl(null);
-  };
+  // const handleClose = () => {
+  //   setIsEdit(false);
+  //   setAnchorEl(null);
+  // };
 
   const open = Boolean(anchorEl);
 
@@ -64,11 +64,7 @@ function Outer({ children, disableActions, field, editable, onSaveField }: Outer
         flex: '1 auto',
         flexDirection: 'column',
         mt: 4,
-        border: `1px dashed rgba(${Math.floor(Math.random() * 255)},
-          ${Math.floor(Math.random() * 255)},
-          ${Math.floor(Math.random() * 255)},
-          1
-        )`,
+        border: `1px dashed ${theme.palette.error.dark}`,
         position: 'relative',
       })}
     >

@@ -1,7 +1,7 @@
-import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import DarkModeOutlined from '@mui/icons-material/DarkModeOutlined';
-import LightModeOutlined from '@mui/icons-material/LightModeOutlined';
+import IconButton from '@mui/material/IconButton';
+import DarkMode from '@mui/icons-material/DarkMode';
+import LightMode from '@mui/icons-material/LightMode';
 
 interface ThemeModeToggleProps {
   checked: boolean;
@@ -13,9 +13,9 @@ export default function ThemeModeToggle(props: ThemeModeToggleProps) {
     <Tooltip title={props.checked ? 'Turn on the light' : 'Turn off the light'}>
       <IconButton color="primary" size='small'  onClick={() => props.onChange(!props.checked)}>
         {props.checked ? (
-          <LightModeOutlined fontSize="small" />
+          <LightMode fontSize="small" />
         ) : (
-          <DarkModeOutlined fontSize="small" />
+          <DarkMode fontSize="small" />
         )}
       </IconButton>
     </Tooltip>

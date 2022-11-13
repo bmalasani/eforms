@@ -1,58 +1,101 @@
 import React from 'react';
-import { styled } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
+import FormsDailog from '../Dialog/FormsDailog';
+import { alpha, styled } from '@mui/material/styles';
 import { useShortCut } from '../../hooks/useShortcut';
-import { Search } from '@mui/icons-material';
-import { SearchButton, SearchLabel, ShortcutLabel } from './NavRequestMenu';
+import { CreateNewFolder } from '@mui/icons-material';
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 1),
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
+export const SearchButton = styled('button')(({ theme }) => {
+  return {
+    minHeight: 34,
+    display: 'flex',
+    alignItems: 'center',
+    paddingLeft: theme.spacing(1),
+    [theme.breakpoints.only('xs')]: {
+      backgroundColor: 'transparent',
+      padding: 0,
+      minWidth: 34,
+      justifyContent: 'center',
+      '& > *:not(.MuiSvgIcon-root)': {
+        display: 'none',
+      },
     },
-  },
-}));
+    [theme.breakpoints.up('sm')]: {
+      minWidth: 200,
+    },
+    fontFamily: theme.typography.fontFamily,
+    position: 'relative',
+    backgroundColor:
+      theme.palette.mode === 'dark' ? theme.palette.grey[900] : theme.palette.grey[50],
+    color: theme.palette.text.secondary,
+    fontSize: theme.typography.pxToRem(14),
+    border: `1px solid ${
+      theme.palette.mode === 'dark' ? theme.palette.grey[700] : theme.palette.grey[200]
+    }`,
+    borderRadius: 10,
+    cursor: 'pointer',
+    transitionProperty: 'all',
+    transitionDuration: '150ms',
+    '&:hover': {
+      background:
+        theme.palette.mode === 'dark'
+          ? alpha(theme.palette.grey[700], 0.4)
+          : alpha(theme.palette.grey[100], 0.7),
+      borderColor:
+        theme.palette.mode === 'dark' ? theme.palette.grey[600] : theme.palette.grey[300],
+    },
+  };
+});
 
-const NavSearch = () => {
+export const SearchLabel = styled('span')(({ theme }) => {
+  return {
+    marginLeft: theme.spacing(1),
+    marginRight: 'auto',
+  };
+});
+
+export const ShortcutLabel = styled('div')(({ theme }) => {
+  return {
+    fontSize: theme.typography.pxToRem(12),
+    fontWeight: 700,
+    lineHeight: '20px',
+    marginLeft: theme.spacing(0.5),
+    border: `1px solid ${
+      theme.palette.mode === 'dark' ? theme.palette.grey[500] : theme.palette.grey[200]
+    }`,
+    backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#FFF',
+    padding: theme.spacing(0, 0.8),
+    borderRadius: 5,
+  };
+});
+
+const NavRequestMenu = () => {
   const searchButtonRef = React.useRef<any>(null);
 
   const [isOpen, setIsOpen] = React.useState(false);
 
-  const search = `Search…`;
+  const search = `New Request`;
   const macOS = window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
 
   const onOpen = React.useCallback(() => {
     setIsOpen(true);
   }, [setIsOpen]);
 
-  useShortCut('k', () => setIsOpen(true));
+  useShortCut('h', () => setIsOpen(true));
 
   return (
     <>
       <SearchButton ref={searchButtonRef} onClick={onOpen}>
-        <Search
+        <CreateNewFolder
           fontSize="small"
           sx={{
             color: (theme) =>
               theme.palette.mode === 'dark' ? theme.palette.grey[300] : theme.palette.grey[500],
           }}
         />
-        {!isOpen ? (
-          <SearchLabel>{search}</SearchLabel>
-        ) : (
-          <StyledInputBase
-            autoFocus
-            onBlur={() => setIsOpen(false)}
-            placeholder="Search…"
-            inputProps={{ 'aria-label': 'search' }}
-          />
-        )}
-        <ShortcutLabel>{macOS ? '⌘' : 'Ctrl+'}K</ShortcutLabel>
+        <SearchLabel>{search}</SearchLabel>
+        <ShortcutLabel>{'Ctrl+'}H</ShortcutLabel>
       </SearchButton>
+      <FormsDailog open={isOpen} handleClose={() => setIsOpen(false)} />
       {/* <Popover
         PaperProps={{
           sx: {
@@ -117,4 +160,4 @@ const NavSearch = () => {
   );
 };
 
-export default NavSearch;
+export default NavRequestMenu;

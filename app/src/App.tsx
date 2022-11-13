@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Await, Outlet, useLoaderData } from 'react-router-dom';
 import { Box, BrandProvider, Footer, NavBar } from './components';
-import SvgMuiLogo from './icons/SvgMuiLogo';
+import SvgMuiLogo from './icons/SvgMuiX';
 import { HomeSkeleton } from './skeletons';
 import { EFormsProvider } from './store';
 

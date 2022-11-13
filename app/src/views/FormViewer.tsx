@@ -6,23 +6,13 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Await, useLoaderData } from 'react-router-dom';
 import { Box, Typography } from '../components';
-import { FormField, Renderer } from '../components/Builder';
+import { Renderer } from '../components/Builder';
 import { FormSkeleton } from '../skeletons';
 
 function FormViewer() {
   const { form }: any = useLoaderData();
   const { control } = useForm<any>();
 
-  const renderChildren = (field: FormField, key?: string | number) => (
-    <Renderer control={control} field={field} key={key}>
-      <>
-        {field.children &&
-          field.children.map((f, i) => {
-            return renderChildren(f, `${f.key || ''}${i}`);
-          })}
-      </>
-    </Renderer>
-  );
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Card sx={{ p: 2 }}>
@@ -30,7 +20,6 @@ function FormViewer() {
           <Await resolve={form}>
             {(form) => (
               <>
-                {console.log(form)}
                 <Box
                   gradient="info"
                   shadow="info"
@@ -39,7 +28,7 @@ function FormViewer() {
                 >
                   <Typography variant="h3">{form.core.formName}</Typography>
                 </Box>
-                {renderChildren(form.formDetails)}
+                <Renderer control={control} field={form.formDetails} />
               </>
             )}
           </Await>
