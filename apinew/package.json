@@ -1,0 +1,22 @@
+{
+  "name": "@meb/apinew",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bmalasani/eforms.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bmalasani/eforms/issues"
+  },
+  "homepage": "https://github.com/bmalasani/eforms#readme"
+}

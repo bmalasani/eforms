@@ -4,12 +4,10 @@ import { KeyRequisationForm } from './data';
 export const appLoader = () => {
   return defer({
     user: new Promise((resolve, reject) => {
-      fetch('/api/user/nani')
+      fetch('/api/user/atuny0')
         .then((res) => {
           res.json().then((data) => {
-            setTimeout(() => {
-              resolve(data);
-            }, 1000 * 1);
+            resolve(data);
           });
         })
         .catch((reason) => reject(reason));
@@ -20,25 +18,22 @@ export const appLoader = () => {
 export const homeLoader = () => {
   return defer({
     stats: new Promise((resolve, reject) => {
-      fetch('/api/stats/nani')
+      fetch('/api/stats/atuny0')
         .then((res) => {
           res.json().then((data) => {
-            setTimeout(() => {
-              resolve(data);
-            }, 1000 * 5);
+            resolve(data);
           });
         })
         .catch((reason) => reject(reason));
     }),
-    requests: fetch('/api/requests').then((res) => res.json()),
+    requests: [],
   });
 };
 
 export const formLoader = ({ request, params }: any) => {
-  console.log(request, params);
   return defer({
     form: new Promise((resolve, reject) => {
-      fetch('/api/forms/nani')
+      fetch('/api/forms')
         .then((res) => {
           res.json().then((data) => {
             setTimeout(() => {

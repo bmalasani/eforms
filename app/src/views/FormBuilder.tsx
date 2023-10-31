@@ -28,6 +28,15 @@ function FormBuilder() {
           },
           children: [
             {
+              key: 'formId',
+              type: 'text',
+              props: {
+                label: 'Form ID',
+                name: 'formId',
+                rules: { required: true },
+              },
+            },
+            {
               key: 'formName',
               type: 'text',
               props: {
@@ -53,6 +62,16 @@ function FormBuilder() {
               props: {
                 label: 'Form Description',
                 name: 'formDescription',
+                multiline: true,
+                rules: { required: true },
+              },
+            },
+            {
+              key: 'activated',
+              type: 'date',
+              props: {
+                label: 'Activate Form On',
+                name: 'activated',
                 multiline: true,
                 rules: { required: true },
               },
@@ -95,7 +114,7 @@ function FormBuilder() {
               type: 'array',
               props: {
                 label: 'Add Flow',
-                name: 'formWorkFlow',
+                name: 'workflows',
                 fields: [
                   {
                     key: 'approverLevel',
@@ -155,6 +174,30 @@ function FormBuilder() {
                       defaultValue: true,
                     },
                   },
+                  {
+                    key: 'approverMessage',
+                    type: 'text',
+                    props: {
+                      label: 'Approver Message',
+                      name: 'approverMessage',
+                    },
+                  },
+                  {
+                    key: 'subject',
+                    type: 'text',
+                    props: {
+                      label: 'Subject',
+                      name: 'subject',
+                    },
+                  },
+                  {
+                    key: 'additionalRecipients',
+                    type: 'text',
+                    props: {
+                      label: 'Additional Recipients',
+                      name: 'additionalRecipients',
+                    },
+                  },
                 ],
                 boxSX: {
                   display: 'grid',
@@ -163,65 +206,6 @@ function FormBuilder() {
                   gridColumnGap: '32px',
                   gridRowGap: '32px',
                 },
-              },
-            },
-          ],
-        },
-        {
-          key: 'sction0119',
-          type: 'section',
-          props: {
-            title: 'Settings',
-            description: 'create notification',
-          },
-          children: [
-            {
-              key: 'props01',
-              type: 'text',
-              props: {
-                label: 'Subject',
-                name: 'subject',
-              },
-            },
-            {
-              key: 'props0121',
-              type: 'text',
-              props: {
-                label: 'Additional Receipients',
-                name: 'additionalReceipients',
-                multiline: true,
-              },
-            },
-            {
-              key: 'activeTill',
-              type: 'date',
-              props: {
-                label: 'Active Till',
-                name: 'activeTill',
-              },
-            },
-            {
-              key: 'submitterMessage',
-              type: 'text',
-              props: {
-                label: 'Submitter Message',
-                name: 'submitterMessage',
-              },
-            },
-            {
-              key: 'approverMessage',
-              type: 'text',
-              props: {
-                label: 'Approver Message',
-                name: 'approverMessage',
-              },
-            },
-            {
-              key: 'compeletedMessage',
-              type: 'text',
-              props: {
-                label: 'Completed Message',
-                name: 'compeletedMessage',
               },
             },
           ],
@@ -254,6 +238,12 @@ function FormBuilder() {
 
   const handleFinish = async () => {
     console.log(form.getValues());
+    const postForm: any = form.getValues();
+    fetch('/api/form', { method: 'post', body: postForm })
+      .then((x) => {
+        console.log(x.json());
+      })
+      .catch((e) => console.log(e));
   };
 
   const handleBack = async () => {

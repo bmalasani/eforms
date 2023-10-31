@@ -31,5 +31,16 @@
     "eslint": "7.32.0",
     "typescript": "^4.6.4",
     "vite": "^3.1.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bmalasani/eforms.git"
+  },
+  "keywords": [],
+  "author": "Malasani Bapaiah",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bmalasani/eforms/issues"
+  },
+  "homepage": "https://github.com/bmalasani/eforms#readme"
 }

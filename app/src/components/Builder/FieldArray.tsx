@@ -37,7 +37,7 @@ function FieldArray({ control, ...rest }: FieldArrayProps) {
             append({ ...defaultValue });
           }}
         >
-          {`Add ${label}`}
+          {`${label}`}
         </Button>
       </Box>
       {fields.map((item, index) => {
